@@ -1,0 +1,45 @@
+# {{ansible_managed}}
+# COMMAND DEFINITIONS
+# Command definitions that this daemon will run.  Definitions
+# are in the following format:
+#
+# command[<command_name>]=<command_line>
+#
+# When the daemon receives a request to return the results of <command_name>
+# it will execute the command specified by the <command_line> argument.
+#
+# Unlike Nagios, the command line cannot contain macros - it must be
+# typed exactly as it should be executed.
+#
+# Note: Any plugins that are used in the command lines must reside
+# on the machine that this daemon is running on!  The examples below
+# assume that you have plugins installed in a /usr/local/nagios/libexec
+# directory.  Also note that you will have to modify the definitions below
+# to match the argument format the plugins expect.  Remember, these are
+# examples only!
+
+
+
+{% if nrpe_include_default_checks|bool %}
+# NRPE Default checks
+command[check_users]={{nrpe_plugin_dir}}/check_users -w 5 -c 10
+command[check_load]={{nrpe_plugin_dir}}/check_load -r -w .15,.10,.05 -c .30,.25,.20
+command[check_hda1]={{nrpe_plugin_dir}}/check_disk -w 20% -c 10% -p /dev/hda1
+command[check_zombie_procs]={{nrpe_plugin_dir}}/check_procs -w 5 -c 10 -s Z
+command[check_total_procs]={{nrpe_plugin_dir}}/check_procs -w 150 -c 200
+{% endif %}
+
+# Globally defined checks
+{% for check in nrpe_global_checks %}
+{{check}}
+{% endfor %}
+
+# Group defined checks
+{% for check in nrpe_group_checks %}
+{{check}}
+{% endfor %}
+
+# Host defined checks
+{% for check in nrpe_host_checks %}
+{{check}}
+{% endfor %}

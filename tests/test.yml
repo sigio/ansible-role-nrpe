@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    nrpe_nagios_server: 192.168.0.1
+    nrpe_include_default_checks: true
+  roles:
+    - nrpe

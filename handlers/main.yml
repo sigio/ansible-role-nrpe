@@ -1,0 +1,5 @@
+---
+# handlers file for nrpe
+
+- name: reload nrpe
+  service: name=nrpe state=restarted

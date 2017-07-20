@@ -1,0 +1,42 @@
+---
+# defaults file for nrpe
+
+nrpe_directory:         "/etc/nagios"
+nrpe_cfg_file:          "{{nrpe_directory}}/nrpe.cfg"
+# cfg-file settings
+nrpe_log_facility:      "daemon"
+nrpe_log_file:          "/var/run/nrpe.log"
+nrpe_log_file_enabled:  false
+nrpe_debug:             0
+nrpe_pidfile:           "/var/run/nrpe/nrpe.pid"
+nrpe_port:              5666
+nrpe_bind_ip:           "0.0.0.0"
+nrpe_user:              "nrpe"
+nrpe_group:             "nrpe"
+nrpe_allowed_hosts:     "127.0.0.1,::1,{{nrpe_nagios_server}}"
+nrpe_dont_blame:        0
+nrpe_allow_bash_subst:  0
+nrpe_command_prefix:    "/usr/bin/sudo"
+nrpe_command_prefix_enabled: false
+nrpe_command_timeout:   60
+nrpe_connect_timeout:   300
+
+nrpe_include_dir:       "/etc/nrpe.d"
+nrpe_plugin_dir:        "/usr/lib64/nagios/plugins"
+nrpe_include_default_checks: false
+
+nrpe_global_checks:     []
+nrpe_group_checks:      []
+nrpe_host_checks:       []
+
+nrpe_nagios_packages:
+  - nagios-plugins-disk
+  - nagios-plugins-http
+  - nagios-plugins-load
+  - nagios-plugins-mailq
+  - nagios-plugins-ping
+  - nagios-plugins-procs
+  - nagios-plugins-swap
+  - nagios-plugins-time
+  - nagios-plugins-uptime
+  - nagios-plugins-users

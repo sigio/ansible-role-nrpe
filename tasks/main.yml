@@ -1,0 +1,27 @@
+---
+# tasks file for nrpe
+
+- name: Install essential software
+  yum: name="{{item}}" state=installed
+  with_items:
+    - nrpe
+    - "{{nrpe_nagios_packages}}"
+
+- name: Create directory for additional config files
+  file: state=directory owner="{{nrpe_user}}" group="{{nrpe_group}}" mode=0750 path="{{nrpe_include_dir}}"
+
+- name: Template main nrpe configuration
+  template: src="nrpe.cfg.j2" dest="{{nrpe_cfg_file}}" owner="{{nrpe_user}}" group="{{nrpe_group}}" mode=0644
+  notify: reload nrpe
+
+- name: Template additional checks from nrpe role
+  template: src="role-nrpe.cfg.j2" dest="{{nrpe_include_dir}}/role-nrpe.cfg" owner="{{nrpe_user}}" group="{{nrpe_group}}" mode=0750
+  notify: reload nrpe
+
+- name: Enable NRPE service
+  service: name="{{item}}" state=started enabled=yes
+  with_items:
+    - nrpe
+
+- name: Allow NRPE traffic from nagios-server
+  firewalld: state=present source="{{nrpe_nagios_server}}" port="{{nrpe_port}}/tcp" state=enabled immediate=true permanent=true
