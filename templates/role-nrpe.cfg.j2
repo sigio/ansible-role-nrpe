@@ -27,6 +27,8 @@ command[check_load]={{nrpe_plugin_dir}}/check_load -r -w .15,.10,.05 -c .30,.25,
 command[check_hda1]={{nrpe_plugin_dir}}/check_disk -w 20% -c 10% -p /dev/hda1
 command[check_zombie_procs]={{nrpe_plugin_dir}}/check_procs -w 5 -c 10 -s Z
 command[check_total_procs]={{nrpe_plugin_dir}}/check_procs -w 150 -c 200
+command[check_smtp]={{nrpe_plugin_dir}}/check_smtp -p 25 -4 -w 2 -c 5
+command[check_uptime]={{nrpe_plugin_dir}}/check_uptime
 {% endif %}
 
 # Globally defined checks
