@@ -40,3 +40,5 @@ nrpe_nagios_packages:
   - nagios-plugins-time
   - nagios-plugins-uptime
   - nagios-plugins-users
+  - nagios-plugins-dummy
+  - nagios-plugins-smtp
