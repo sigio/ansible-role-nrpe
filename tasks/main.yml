@@ -6,6 +6,8 @@
   with_items:
     - nrpe
     - "{{nrpe_nagios_packages}}"
+    - "{{host_nagios_plugins|default([])}}"
+    - "{{group_nagios_plugins|default([])}}"
 
 - name: Create directory for additional config files
   file: state=directory owner="{{nrpe_user}}" group="{{nrpe_group}}" mode=0750 path="{{nrpe_include_dir}}"
